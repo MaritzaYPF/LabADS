@@ -1,3 +1,4 @@
+using ADSProject.Models;
 using ADSProject.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,6 +28,7 @@ namespace ADSProject
 
             // Inyeccion de dependencias
             services.AddSingleton<IEstudianteRepository, EstudianteRepository>();
+            services.AddSingleton<IMateriaRepository, MateriaRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
