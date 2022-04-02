@@ -81,7 +81,7 @@ namespace ADSProject.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult Delete(int idMateria)
         {
             try
