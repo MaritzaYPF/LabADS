@@ -7,6 +7,7 @@ namespace ADSProject.Models
     {
         [Required(ErrorMessage = Constants.REQUIRED_FIELD)]
         [Display(Name = "IdGrupo")]
+        [Key]
         public int idGrupo { get; set; }
 
         [Required(ErrorMessage = Constants.REQUIRED_FIELD)]
@@ -32,5 +33,7 @@ namespace ADSProject.Models
         [Display(Name = "Anio")]
         public string Anio { get; set; }
 
+
+        public bool estado { get; set; }
     }
 }

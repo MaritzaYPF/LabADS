@@ -12,7 +12,7 @@
 <div class="row">
     <div class="col-md-4">
         <input type="hidden" id="operacion" value="@ViewData["Operaciones"]" />
-        <input type="hidden" id="_redirectURL" value="@Url.Action("Index", "Estudiante")" />
+        <input type="hidden" id="_redirectURL" value="@Url.Action("Index", "Carrera")" />
 
         <form asp-action="Form">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -29,6 +29,8 @@
                 <input asp-for="NombresCarrera" class="form-control" />
                 <span asp-validation-for="NombresCarrera" class="text-danger"></span>
             </div>
+            <input type="checkbox" asp-for="estado" value="true" type="hidden" />
+
             <div class="form-group">
                 <input type="submit" value="Guardar" class="btn btn-primary" />
             </div>

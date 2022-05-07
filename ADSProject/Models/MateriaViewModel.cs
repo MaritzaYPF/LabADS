@@ -6,11 +6,14 @@ namespace ADSProject.Models
     public class MateriaViewModel
     {
         [Display(Name = "ID")]
+        [Key]
         public int idMateria { get; set; }
 
         [Required(ErrorMessage = Constants.REQUIRED_FIELD)]
         [StringLength(50, MinimumLength = 6, ErrorMessage = "La longitud del campo no debe ser mayor a 50 caracteres ni menor de 6 caracteres.")]
         [Display(Name = "Nombre")]
         public string nombresMateria { get; set; }
+
+        public bool estado { get; set; }
     }
 }
