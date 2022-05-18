@@ -29,34 +29,40 @@
                         <th>
                             @Html.DisplayNameFor(model => model.nombresMateria)
                         </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.idCarrera)
+                        </th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.idMateria)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.nombresMateria)
-                            </td>
-                            <td>
-                                <a class="btn btn-primary"
-                                   asp-route-idMateria="@item.idMateria"
-                                   asp-action="Form"
-                                   asp-route-operaciones="@Operaciones.modificar">Modificar</a>
-                                <a class="btn btn-warning"
-                                   asp-route-idMateria="@item.idMateria"
-                                   asp-action="Form"
-                                   asp-route-operaciones="@Operaciones.leer">Leer</a>
-                                <a class="btn btn-danger eliminar"
-                                   asp-route-idMateria="@item.idMateria"
-                                   asp-action="Delete">Eliminar</a>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.idMateria)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nombresMateria)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Carreras.NombresCarrera)
+                        </td>
+                        <td>
+                            <a class="btn btn-primary"
+                               asp-route-idMateria="@item.idMateria"
+                               asp-action="Form"
+                               asp-route-operaciones="@Operaciones.modificar">Modificar</a>
+                            <a class="btn btn-warning"
+                               asp-route-idMateria="@item.idMateria"
+                               asp-action="Form"
+                               asp-route-operaciones="@Operaciones.leer">Leer</a>
+                            <a class="btn btn-danger eliminar"
+                               asp-route-idMateria="@item.idMateria"
+                               asp-action="Delete">Eliminar</a>
 
-                            </td>
-                        </tr>
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>

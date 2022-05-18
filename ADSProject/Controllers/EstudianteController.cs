@@ -12,10 +12,12 @@ namespace ADSProject.Controllers
     public class EstudianteController : Controller
     {
         private readonly IEstudianteRepository estudianteRepository;
+        private readonly ICarreraRepository carreraRepository;
 
-        public EstudianteController(IEstudianteRepository estudianteRepository)
+        public EstudianteController(IEstudianteRepository estudianteRepository, ICarreraRepository carreraRepository)
         {
             this.estudianteRepository = estudianteRepository;
+            this.carreraRepository = carreraRepository;
         }
 
         [HttpGet]
@@ -23,7 +25,13 @@ namespace ADSProject.Controllers
         {
             try
             {
-                var item = estudianteRepository.obtenerEstudiantes();
+                //    var item = estudianteRepository.obtenerEstudiantes();
+
+
+                // se obtiene el listado de estudiantes con sus carreras
+
+                var item = estudianteRepository.obtenerEstudiante(new string[] { "Carreras" });
+
 
                 return View(item);
             }
@@ -48,6 +56,9 @@ namespace ADSProject.Controllers
                 }
                 // Indica el tipo de operacion que es esta realizando
                 ViewData["Operaciones"] = operaciones;
+
+                //Obtiene toda las carreras disponibles
+                ViewBag.Carreras = carreraRepository.obtenerCarreras();
 
                 return View(estudiante);
 

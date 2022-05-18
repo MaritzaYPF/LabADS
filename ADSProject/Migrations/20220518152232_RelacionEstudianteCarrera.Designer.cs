@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ADSProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220507170949_MyFirstMigration")]
-    partial class MyFirstMigration
+    [Migration("20220518152232_RelacionEstudianteCarrera")]
+    partial class RelacionEstudianteCarrera
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -64,12 +64,17 @@ namespace ADSProject.Migrations
                     b.Property<bool>("estado")
                         .HasColumnType("bit");
 
+                    b.Property<int>("idCarrera")
+                        .HasColumnType("int");
+
                     b.Property<string>("nombresEstudiante")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("idEstudiante");
+
+                    b.HasIndex("idCarrera");
 
                     b.ToTable("Estudiantes");
                 });
@@ -118,12 +123,17 @@ namespace ADSProject.Migrations
                     b.Property<bool>("estado")
                         .HasColumnType("bit");
 
+                    b.Property<int>("idCarrera")
+                        .HasColumnType("int");
+
                     b.Property<string>("nombresMateria")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("idMateria");
+
+                    b.HasIndex("idCarrera");
 
                     b.ToTable("Materias");
                 });
@@ -154,6 +164,28 @@ namespace ADSProject.Migrations
                     b.HasKey("idProfesor");
 
                     b.ToTable("Profesores");
+                });
+
+            modelBuilder.Entity("ADSProject.Models.EstudianteViewModel", b =>
+                {
+                    b.HasOne("ADSProject.Models.CarreraViewModel", "Carreras")
+                        .WithMany()
+                        .HasForeignKey("idCarrera")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Carreras");
+                });
+
+            modelBuilder.Entity("ADSProject.Models.MateriaViewModel", b =>
+                {
+                    b.HasOne("ADSProject.Models.CarreraViewModel", "Carreras")
+                        .WithMany()
+                        .HasForeignKey("idCarrera")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Carreras");
                 });
 #pragma warning restore 612, 618
         }

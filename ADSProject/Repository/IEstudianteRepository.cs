@@ -7,6 +7,8 @@ namespace ADSProject.Repository
     {
         List<EstudianteViewModel> obtenerEstudiantes();
 
+        List<EstudianteViewModel> obtenerEstudiante(string[] includes);
+
         int agregarEstudiante(EstudianteViewModel estudianteViewModel);
 
         int actualizarEstudiante(int idEstudiante, EstudianteViewModel estudianteViewModel);

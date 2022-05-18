@@ -7,6 +7,8 @@ namespace ADSProject.Repository
     {
         List<MateriaViewModel> obtenerMaterias();
 
+        List<MateriaViewModel> obtenerMaterias(string[] includes);
+
         int agregarMateria(MateriaViewModel materiaViewModel);
 
         int actualizarMateria(int idMateria, MateriaViewModel materiaViewModel);

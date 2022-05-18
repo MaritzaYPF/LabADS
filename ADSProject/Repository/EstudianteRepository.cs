@@ -1,5 +1,6 @@
 ﻿using ADSProject.Data;
 using ADSProject.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -120,6 +121,27 @@ namespace ADSProject.Repository
                
                 obtener todo los estudiantes  con filtros (estado = 1)*/
                 return applicationDbContext.Estudiantes.Where(x => x.estado == true).ToList();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<EstudianteViewModel> obtenerEstudiante(string[] includes)
+        {
+            try
+            {
+                /*obtener todo los estudiantes donde la propiedad estado sea verdadero. (es decir que este habilitado)*/
+                var lst = applicationDbContext.Estudiantes.Where(x => x.estado == true).AsQueryable();
+
+                foreach (var item in includes)
+                {
+                    lst = lst.Include(item);
+                }
+                return lst.ToList();
+
             }
             catch (Exception)
             {

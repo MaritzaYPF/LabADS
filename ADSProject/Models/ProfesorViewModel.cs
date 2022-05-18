@@ -24,7 +24,6 @@ namespace ADSProject.Models
 
         public string correoProfesor { get; set; }
 
-
         public bool estado { get; set; }
     }
 }

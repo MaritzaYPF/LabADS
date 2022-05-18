@@ -1,4 +1,6 @@
-﻿using ADSProject.Models;
+﻿using ADSProject.Data;
+using ADSProject.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,31 +11,32 @@ namespace ADSProject.Repository
 {
     public class GrupoRepository : IGrupoRepository
     {
-        private readonly List<GrupoViewModel> lstGrupo;
+         private readonly List<GrupoViewModel> lstGrupo;
+      
 
-        public GrupoRepository()
+        public GrupoRepository(ApplicationDbContext applicationDbContext)
         {
             lstGrupo = new List<GrupoViewModel>
-            {
-                new GrupoViewModel{ idGrupo = 1, idCarrera = 1, idMateria = 1,
+             {
+                 new GrupoViewModel{ idGrupo = 1, idCarrera = 1, idMateria = 1,
                     idProfesor = 1, Ciclo = "01", Anio="2022"}
-         };
+          };
         }
 
         public int agregarGrupo(GrupoViewModel grupoViewModel)
         {
             try
             {
-                if (lstGrupo.Count > 0)
-                {
-                    grupoViewModel.idGrupo = lstGrupo.Last().idGrupo + 1;
-                }
-                else
-                {
-                    grupoViewModel.idGrupo = 1;
-                }
-                lstGrupo.Add(grupoViewModel);
-                return grupoViewModel.idGrupo;
+                 if (lstGrupo.Count > 0)
+                  {
+                      grupoViewModel.idGrupo = lstGrupo.Last().idGrupo + 1;
+                  }
+                  else
+                  {
+                      grupoViewModel.idGrupo = 1;
+                  }
+                  lstGrupo.Add(grupoViewModel);
+                  return grupoViewModel.idGrupo;
             }
             catch (Exception)
             {
@@ -63,6 +66,7 @@ namespace ADSProject.Repository
             try
             {
                 lstGrupo.RemoveAt(lstGrupo.FindIndex(x => x.idGrupo == idGrupo));
+
                 return true;
             }
             catch (Exception)
@@ -71,7 +75,6 @@ namespace ADSProject.Repository
                 throw;
             }
         }
-
         public List<GrupoViewModel> obtenerGrupo()
         {
 
@@ -86,7 +89,7 @@ namespace ADSProject.Repository
                 throw;
             }
 
-           
+
         }
 
         public GrupoViewModel obtenerGrupoPorID(int idGrupo)
