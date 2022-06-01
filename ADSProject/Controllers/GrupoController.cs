@@ -1,22 +1,31 @@
-﻿using ADSProject.Models;
-using ADSProject.Repository;
+﻿using ADSProject.Repository;
 using ADSProject.Utils;
-using Microsoft.AspNetCore.Mvc;
 using System;
+using Microsoft.AspNetCore.Mvc;
+using ADSProject.Models;
+using System.Net;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace ADSProject.Controllers
 {
     public class GrupoController : Controller
     {
         private readonly IGrupoRepository grupoRepository;
+        private readonly ICarreraRepository carreraRepository;
+        private readonly IMateriaRepository materiaRepository;
+        private readonly IProfesorRepository profesorRepository;
 
 
-        public GrupoController(IGrupoRepository grupoRepository)
+        public GrupoController(IGrupoRepository grupoRepository, ICarreraRepository carreraRepository,
+                               IMateriaRepository materiaRepository, IProfesorRepository profesorRepository)
         {
             this.grupoRepository = grupoRepository;
+            this.carreraRepository = carreraRepository;
+            this.materiaRepository = materiaRepository;
+            this.profesorRepository = profesorRepository;
+
         }
 
         [HttpGet]
@@ -24,7 +33,8 @@ namespace ADSProject.Controllers
         {
             try
             {
-                var item = grupoRepository.obtenerGrupo();
+
+                var item = grupoRepository.obtenerGrupos(new string[] { "Carreras", "Profesores", "Materias" });
 
                 return View(item);
             }
@@ -40,17 +50,25 @@ namespace ADSProject.Controllers
         {
             try
             {
-                var grupo = new GrupoViewModel();
+                var grupos = new GrupoViewModel();
 
                 if (idGrupo.HasValue)
                 {
-                    grupo = grupoRepository.obtenerGrupoPorID(idGrupo.Value);
+                    grupos = grupoRepository.obtenerGrupoPorId(idGrupo.Value);
                 }
-                
+
                 ViewData["Operaciones"] = operaciones;
 
-                return View(grupo);
+                // Listado de carreras
+                ViewBag.Carreras = carreraRepository.obtenerCarreras();
 
+                // Listado de materias
+                ViewBag.Materias = materiaRepository.obtenerMaterias();
+
+                // Listado de profesores
+                ViewBag.Profesores = profesorRepository.obtenerProfesor();
+
+                return View(grupos);
             }
             catch (Exception)
             {
@@ -64,17 +82,23 @@ namespace ADSProject.Controllers
         {
             try
             {
-                if (grupoViewModel.idGrupo == 0) 
+                if (ModelState.IsValid)
                 {
-                   grupoRepository.agregarGrupo(grupoViewModel);
-                }
-                else 
-                {
-                   grupoRepository.actualizarGrupo
-                        (grupoViewModel.idGrupo, grupoViewModel);
-                }
+                    if (grupoViewModel.idGrupo == 0) // Para el caso de agregar
+                    {
+                        grupoRepository.agregarGrupo(grupoViewModel);
+                    }
+                    else
+                    {
+                        grupoRepository.actualizarGrupo(grupoViewModel.idGrupo, grupoViewModel);
+                    }
 
-                return RedirectToAction("Index");
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
             catch (Exception)
             {
@@ -89,20 +113,24 @@ namespace ADSProject.Controllers
             try
             {
                 grupoRepository.eliminarGrupo(idGrupo);
+
+                return RedirectToAction("Index");
             }
             catch (Exception)
             {
 
                 throw;
             }
-
-            return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public IActionResult cargarMaterias(int? idCarrera)
+        {
+            var listadoCarreras = idCarrera == null ? new List<MateriaViewModel>() :
 
+            materiaRepository.obtenerMaterias().Where(x => x.idCarrera == idCarrera);
 
-
-
-
+            return StatusCode(StatusCodes.Status200OK, listadoCarreras);
+        }
     }
 }

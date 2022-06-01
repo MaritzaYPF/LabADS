@@ -53,13 +53,13 @@
                                 @Html.DisplayFor(modelItem => item.idGrupo)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.idCarrera)
+                                @Html.DisplayFor(modelItem => item.Carreras.NombresCarrera)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.idMateria)
+                                @Html.DisplayFor(modelItem => item.Materias.nombresMateria)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.idProfesor)
+                                @Html.DisplayFor(modelItem => item.Profesores.nombresProfesor)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Ciclo)
@@ -69,17 +69,10 @@
                             </td>
                             <td>
 
-                                <a class="btn btn-primary"
-                                   asp-route-idGrupo="@item.idGrupo"
-                                   asp-action="Form"
-                                   asp-route-operaciones="@Operaciones.modificar">Modificar</a>
-                                <a class="btn btn-warning"
-                                   asp-route-idGrupo="@item.idGrupo"
-                                   asp-action="Form"
-                                   asp-route-operaciones="@Operaciones.leer">Leer</a>
-                                <a class="btn btn-danger eliminar"
-                                   asp-route-idGrupo="@item.idGrupo"
-                                   asp-action="Delete">Eliminar</a>
+                                <a class="btn btn-primary" asp-route-idGrupo="@item.idGrupo" asp-action="Form" asp-route-operaciones="@Operaciones.modificar">Modificar</a>
+                                <a class="btn btn-warning" asp-route-idGrupo="@item.idGrupo" asp-action="Form" asp-route-operaciones="@Operaciones.leer">Leer</a>
+                                <a class="btn btn-danger eliminar" asp-route-idGrupo="@item.idGrupo" asp-action="form" asp-route-operaciones="@Operaciones.eliminar">Eliminar</a>
+                                <a class="btn btn-secondary" asp-route-idGrupo="@item.idGrupo" asp-action="Form" asp-controller="AsignacionGrupo">Asignar grupo</a>
 
                             </td>
                         </tr>

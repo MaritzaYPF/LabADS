@@ -1,11 +1,15 @@
 ﻿using ADSProject.Utils;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ADSProject.Models
 {
+   
     public class EstudianteViewModel
     {
+       
+
         [Display(Name = "ID")]
         [Key]
 
@@ -30,8 +34,10 @@ namespace ADSProject.Models
         [ForeignKey("idCarrera")]
         public CarreraViewModel Carreras { get; set; }
 
-
+       
         public bool estado { get; set; }
+
+         public ICollection<AsignacionGrupoViewModel> AsignacionGrupos { get; set; }
 
        
     }

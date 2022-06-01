@@ -28,8 +28,8 @@ namespace ADSProject.Migrations
                     idGrupo = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     idCarrera = table.Column<int>(type: "int", nullable: false),
-                    idMateria = table.Column<int>(type: "int", nullable: false),
                     idProfesor = table.Column<int>(type: "int", nullable: false),
+                    idMateria = table.Column<int>(type: "int", nullable: false),
                     Ciclo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Anio = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     estado = table.Column<bool>(type: "bit", nullable: false)
@@ -100,6 +100,42 @@ namespace ADSProject.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "AsignacionGrupos",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    idGrupo = table.Column<int>(type: "int", nullable: false),
+                    idEstudiante = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AsignacionGrupos", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_AsignacionGrupos_Estudiantes_idEstudiante",
+                        column: x => x.idEstudiante,
+                        principalTable: "Estudiantes",
+                        principalColumn: "idEstudiante",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AsignacionGrupos_Grupos_idGrupo",
+                        column: x => x.idGrupo,
+                        principalTable: "Grupos",
+                        principalColumn: "idGrupo",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AsignacionGrupos_idEstudiante",
+                table: "AsignacionGrupos",
+                column: "idEstudiante");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AsignacionGrupos_idGrupo",
+                table: "AsignacionGrupos",
+                column: "idGrupo");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Estudiantes_idCarrera",
                 table: "Estudiantes",
@@ -114,16 +150,19 @@ namespace ADSProject.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Estudiantes");
-
-            migrationBuilder.DropTable(
-                name: "Grupos");
+                name: "AsignacionGrupos");
 
             migrationBuilder.DropTable(
                 name: "Materias");
 
             migrationBuilder.DropTable(
                 name: "Profesores");
+
+            migrationBuilder.DropTable(
+                name: "Estudiantes");
+
+            migrationBuilder.DropTable(
+                name: "Grupos");
 
             migrationBuilder.DropTable(
                 name: "Carreras");

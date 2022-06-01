@@ -5,7 +5,6 @@ namespace ADSProject.Repository
 {
       public interface IGrupoRepository
     {
-        List<GrupoViewModel> obtenerGrupo();
 
         int agregarGrupo(GrupoViewModel grupoViewModel);
 
@@ -13,6 +12,12 @@ namespace ADSProject.Repository
 
         bool eliminarGrupo(int idGrupo);
 
-        GrupoViewModel obtenerGrupoPorID(int idGrupo);
+        List<GrupoViewModel> obtenerGrupos();
+
+        List<GrupoViewModel> obtenerGrupos(string[] includes);
+
+        GrupoViewModel obtenerGrupoPorID(int idGrupo, string[] includes);
+       
+        GrupoViewModel obtenerGrupoPorId(int idGrupo);
     }
 }

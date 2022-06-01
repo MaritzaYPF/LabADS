@@ -1,6 +1,7 @@
 ﻿using ADSProject.Models;
 using ADSProject.Repository;
 using ADSProject.Utils;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -69,16 +70,28 @@ namespace ADSProject.Controllers
         {
             try
             {
-                if (materiaViewModel.idMateria == 0) 
+                if (ModelState.IsValid)
                 {
-                    materiaRepository.agregarMateria(materiaViewModel);
-                }
-                else 
-                {
-                   materiaRepository.actualizarMateria
-                        (materiaViewModel.idMateria, materiaViewModel);
-                }
+                    int id = 0;
+                    if (materiaViewModel.idMateria == 0)
+                    {
+                        id = materiaRepository.agregarMateria(materiaViewModel);
+                    }
+                    else
+                    {
+                       id = materiaRepository.actualizarMateria
+                             (materiaViewModel.idMateria, materiaViewModel);
+                    }
+                    if (id > 0)
+                    {
+                        return StatusCode(StatusCodes.Status200OK);
+                    }
 
+                    else
+                    {
+                        return StatusCode(StatusCodes.Status202Accepted);
+                    }
+                }
                 return RedirectToAction("Index");
             }
             catch (Exception)
